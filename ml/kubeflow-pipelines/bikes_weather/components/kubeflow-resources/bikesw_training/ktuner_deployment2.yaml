@@ -3,15 +3,15 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: ktuner-chief
-  name: kchief-dep
+    app: ktuner-tuner
+  name: ktuner-dep2
   namespace: default
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: ktuner-chief
+        app: ktuner-tuner
         version: v1
     spec:
       containers:
@@ -23,19 +23,17 @@ spec:
         image: gcr.io/aju-vtests2/ml-pipeline-bikes-tuner
         env:
         - name: KERASTUNER_TUNER_ID
-          value: chief
+          value: tuner2
         - name: KERASTUNER_ORACLE_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
+          value: ktuner-chief
         - name: KERASTUNER_ORACLE_PORT
           value: "9000"
         imagePullPolicy: Always
-        name: ktuner-chief
+        name: kktuner-tuner
         ports:
         - name: tuner-port
           containerPort: 9000
         resources:
           limits:
-            cpu: 1
-            memory: 2Gi
+            nvidia.com/gpu: 1
+            memory: 20Gi

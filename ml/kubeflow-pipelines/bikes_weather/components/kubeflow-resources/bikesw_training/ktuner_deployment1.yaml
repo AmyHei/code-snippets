@@ -4,10 +4,10 @@ kind: Deployment
 metadata:
   labels:
     app: ktuner-tuner
-  name: ktuner-dep
+  name: ktuner-dep1
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -18,7 +18,8 @@ spec:
       - args:
         - --epochs=2
         - --tuner-dir=gs://aju-pipelines/hptest2
-        - --tuner-proj=p3
+        - --tuner-proj=p7
+        - --max-trials=8
         image: gcr.io/aju-vtests2/ml-pipeline-bikes-tuner
         env:
         - name: KERASTUNER_TUNER_ID
@@ -35,4 +36,4 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 1
-            memory: 16Gi
+            memory: 20Gi
