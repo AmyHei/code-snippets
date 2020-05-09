@@ -1,13 +1,13 @@
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   labels:
     app: ktuner-tuner
   name: ktuner-dep1
   namespace: default
 spec:
-  replicas: 1
+  # replicas: 1
   template:
     metadata:
       labels:
@@ -18,7 +18,7 @@ spec:
       - args:
         - --epochs=2
         - --tuner-dir=gs://aju-pipelines/hptest2
-        - --tuner-proj=p7
+        - --tuner-proj=p8
         - --max-trials=8
         image: gcr.io/aju-vtests2/ml-pipeline-bikes-tuner
         env:
@@ -37,3 +37,5 @@ spec:
           limits:
             nvidia.com/gpu: 1
             memory: 20Gi
+      restartPolicy: Never
+
